@@ -15,6 +15,7 @@ from tensorflow.keras.layers import (
     Dropout,
 )
 from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 from carregar_dados import carregar_dados, NOMES_CLASSES
 
@@ -45,7 +46,7 @@ def construir_modelo():
 
         # ── Bloco 1: bordas e texturas simples ──
         Conv2D(16, (3, 3), activation="relu", padding="same",
-               input_shape=(32, 32, 1)),
+               input_shape=(32, 32, 3)),
         MaxPooling2D((2, 2)),   # 32 → 16
 
         # ── Bloco 2: padrões médios ──
@@ -131,10 +132,20 @@ def main():
         verbose=1,
     )
 
-    # 4. Treinar
+    # 4. Data augmentation (cria variações artificiais das imagens)
+    datagen = ImageDataGenerator(
+        rotation_range=20,       # gira até 20°
+        width_shift_range=0.1,  # desloca horizontal 10%
+        height_shift_range=0.1, # desloca vertical 10%
+        zoom_range=0.1,         # zoom de até 10%
+        brightness_range=[0.8, 1.2],  # varia brilho
+        horizontal_flip=True,   # espelha horizontal
+    )
+
+    # 5. Treinar com augmentation
     print("\n🎯 Iniciando treinamento...\n")
     historico = modelo.fit(
-        X_train, y_train,
+        datagen.flow(X_train, y_train, batch_size=LOTE),
         validation_data=(X_val, y_val),
         epochs=EPOCAS,
         batch_size=LOTE,

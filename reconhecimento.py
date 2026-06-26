@@ -27,23 +27,16 @@ CONFIANCA_MINIMA = 0.6  # Só mostra predição se confiança > 60%
 def preprocessar_frame(frame):
     """
     Aplica o mesmo pré-processamento usado no treino:
-    cinza → redimensionar 32×32 → equalizar → normalizar.
+    redimensionar 32×32 → normalizar.
     """
-    # Converte para cinza
-    img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
     # Redimensiona
-    img = cv2.resize(img, (TAMANHO_IMG, TAMANHO_IMG))
-
-    # Equaliza histograma
-    img = cv2.equalizeHist(img)
+    img = cv2.resize(frame, (TAMANHO_IMG, TAMANHO_IMG))
 
     # Normaliza pixels para [0, 1] (float32)
     img = img.astype(np.float32) / 255.0
 
-    # Adiciona dimensões: (32, 32) → (1, 32, 32, 1)
-    img = np.expand_dims(img, axis=0)    # batch
-    img = np.expand_dims(img, axis=-1)   # canal
+    # Adiciona dimensão do batch: (32, 32, 3) → (1, 32, 32, 3)
+    img = np.expand_dims(img, axis=0)
 
     return img
 

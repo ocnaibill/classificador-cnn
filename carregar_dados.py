@@ -17,7 +17,7 @@ from sklearn.model_selection import train_test_split
 # ─────────────────────────────────────────────
 
 RAIZ_IMAGENS = "Imagens"
-NOMES_CLASSES = ["copo", "mouse", "controle", "fundo"]
+NOMES_CLASSES = ["copo", "mouse", "controle"]
 TAMANHO_IMG = 32
 TESTE_TAMANHO = 0.2       # 20% dos dados vão pra teste
 VALIDACAO_TAMANHO = 0.15  # 15% do restante vão pra validação
@@ -69,20 +69,11 @@ def carregar_dados():
                 print(f"    ⚠️  Erro ao ler {caminho_completo} — pulando")
                 continue
 
-            # 2. Converte para escala de cinza
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-            # 3. Redimensiona para 32×32
+            # 2. Redimensiona para 32×32
             img = cv2.resize(img, (TAMANHO_IMG, TAMANHO_IMG))
 
-            # 4. Equaliza o histograma (corrige iluminação)
-            img = cv2.equalizeHist(img)
-
-            # 5. Normaliza pixels para o intervalo [0, 1]
+            # 3. Normaliza pixels para o intervalo [0, 1]
             img = img.astype(np.float32) / 255.0
-
-            # 6. Adiciona dimensão do canal (32, 32) → (32, 32, 1)
-            img = np.expand_dims(img, axis=-1)
 
             X.append(img)
             y.append(classe_id)
