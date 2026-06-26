@@ -13,7 +13,7 @@ import numpy as np
 
 # Traduz número da pasta → nome visível na tela
 # Ordem: 0=copo, 1=mouse, 2=controle
-NOMES_CLASSES = ["copo", "mouse", "controle"]
+NOMES_CLASSES = ["copo", "mouse", "controle", "fundo"]
 
 
 # ─────────────────────────────────────────────
