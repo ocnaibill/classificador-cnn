@@ -17,7 +17,7 @@ from sklearn.model_selection import train_test_split
 # ─────────────────────────────────────────────
 
 RAIZ_IMAGENS = "Imagens"
-NOMES_CLASSES = ["copo", "mouse", "controle"]
+NOMES_CLASSES = ["mouse", "livro", "controle"]
 TAMANHO_IMG = 32
 TESTE_TAMANHO = 0.2       # 20% dos dados vão pra teste
 VALIDACAO_TAMANHO = 0.15  # 15% do restante vão pra validação
