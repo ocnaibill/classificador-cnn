@@ -45,7 +45,7 @@ def construir_modelo():
 
         # ── Bloco 1: bordas e texturas simples ──
         Conv2D(16, (3, 3), activation="relu", padding="same",
-               input_shape=(32, 32, 3)),
+               input_shape=(32, 32, 1)),
         MaxPooling2D((2, 2)),   # 32 → 16
 
         # ── Bloco 2: padrões médios ──
